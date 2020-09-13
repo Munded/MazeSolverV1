@@ -10,6 +10,7 @@ class Bot:
         self.maze = maze
         self.end_position = end_position
         self.validator = MoveValidator(len(self.maze[0]), len(self.maze))
+        self.finished = False
 
     def get_current_position(self):
         print(self.current_position)
@@ -24,7 +25,7 @@ class Bot:
         self.move_horizontal(new_position)
 
     def move_horizontal(self, new_position):
-        if self.validator.validate_x(new_position):
+        if not self.finished and self.validator.validate_x(new_position):
             self.current_position[0] = new_position
             self.process_movement()
 
@@ -38,10 +39,15 @@ class Bot:
         self.move_vertical(new_position)
 
     def move_vertical(self, new_position):
-        if self.validator.validate_y(new_position):
+        if not self.finished and self.validator.validate_y(new_position):
             self.current_position[1] = new_position
             self.process_movement()
 
+    #post-movement processing
     def process_movement(self):
-        self.moves +=1
-        print(self.current_position)
+        if self.current_position[0] == self.end_position[0] and self.current_position[1] == self.end_position[1]:
+            print("You Won")
+            self.finished = True
+        else:
+            self.moves +=1
+            print(self.current_position)

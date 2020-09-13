@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-import Bot
+from Bot import Bot
 
 class Maze:
     def __init__(self):
@@ -26,5 +26,5 @@ class Maze:
         return grid
 
     def add_bot(self):
-        newBot = Bot.Bot(self.layout, self.end_position)
+        newBot = Bot(self.layout, self.end_position)
         self.competitors.append(newBot)
