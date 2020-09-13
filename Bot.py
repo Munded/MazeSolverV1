@@ -14,26 +14,30 @@ class Bot:
     def get_current_position(self):
         print(self.current_position)
 
+    #Horizontal Movement
     def move_right(self):
         new_position = self.current_position[0] + 1
-        if self.validator.validate_x(new_position):
-            self.current_position[0] = new_position
-            self.process_movement()
+        self.move_horizontal(new_position)
 
     def move_left(self):
         new_position = self.current_position[0] - 1
+        self.move_horizontal(new_position)
+
+    def move_horizontal(self, new_position):
         if self.validator.validate_x(new_position):
             self.current_position[0] = new_position
             self.process_movement()
 
+    #Vertical Movement
     def move_up(self):
         new_position = self.current_position[1] - 1
-        if self.validator.validate_y(new_position):
-            self.current_position[1] = new_position
-            self.process_movement()
+        self.move_vertical(new_position)
 
     def move_down(self):
         new_position = self.current_position[1] + 1
+        self.move_vertical(new_position)
+
+    def move_vertical(self, new_position):
         if self.validator.validate_y(new_position):
             self.current_position[1] = new_position
             self.process_movement()
