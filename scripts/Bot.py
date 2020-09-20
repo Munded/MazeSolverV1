@@ -5,12 +5,23 @@ from MoveValidator import MoveValidator
 class Bot:
     def __init__(self, maze, end_position):
         self.starting_position = [0,0]
+        self.lives = 3
         self.moves = 0
         self.current_position = [0,0]
         self.maze = maze
         self.end_position = end_position
         self.validator = MoveValidator(len(self.maze[0]), len(self.maze))
         self.finished = False
+
+        def __init__(self, maze, end_position, lives):
+            self.starting_position = [0,0]
+            self.lives = lives
+            self.moves = 0
+            self.current_position = [0,0]
+            self.maze = maze
+            self.end_position = end_position
+            self.validator = MoveValidator(len(self.maze[0]), len(self.maze))
+            self.finished = False
 
     def get_current_position(self):
         print(self.current_position)
@@ -25,9 +36,14 @@ class Bot:
         self.move_horizontal(new_position)
 
     def move_horizontal(self, new_position):
-        if not self.finished and self.validator.validate_x(new_position):
-            self.current_position[0] = new_position
-            self.process_movement()
+        if not self.finished or self.lives > 0 :
+            if self.validator.validate_x(new_position):
+                self.current_position[1] = new_position
+                self.process_movement()
+            else:
+                self.lives = self.lives - 1
+                if self.lives == 0:
+                    print("You Lose")
 
     #Vertical Movement
     def move_up(self):
@@ -39,9 +55,14 @@ class Bot:
         self.move_vertical(new_position)
 
     def move_vertical(self, new_position):
-        if not self.finished and self.validator.validate_y(new_position):
-            self.current_position[1] = new_position
-            self.process_movement()
+        if not self.finished or self.lives > 0 :
+            if self.validator.validate_y(new_position):
+                self.current_position[1] = new_position
+                self.process_movement()
+            else:
+                self.lives = self.lives - 1
+                if self.lives == 0:
+                    print("You Lose")
 
     #post-movement processing
     def process_movement(self):
